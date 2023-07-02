@@ -7,6 +7,8 @@ def pascal_triangle(n):
     for i in range(n):
         row = []
         
+        if n <= 0:
+            return triangle
         for j in range(i + 1):
             if j == 0 or j == i:
                 # the first and last elements in each row are always 1
