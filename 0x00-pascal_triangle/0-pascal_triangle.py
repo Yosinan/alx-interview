@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Pascal's Triangle"""
 
+
 def pascal_triangle(n):
     """
      function def pascal_triangle(n) returns a list of lists
@@ -10,7 +11,7 @@ def pascal_triangle(n):
 
     for i in range(n):
         row = []
-        
+
         if n <= 0:
             return triangle
         for j in range(i + 1):
@@ -21,7 +22,7 @@ def pascal_triangle(n):
                 # calculate the value based on the sum of the two numbers above
                 value = triangle[i - 1][j - 1] + triangle[i - 1][j]
                 row.append(value)
-        
+
         triangle.append(row)
-    
+
     return triangle
