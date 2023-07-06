@@ -1,16 +1,15 @@
 def canUnlockAll(boxes):
-    n = len(boxes)  # no of boxes
-    visited = set()  # set to store visited boxes
-    queue = [0]  # Queue to store boxes for checking
+    n = len(boxes)  # Number of boxes
+    visited = set()  # Set to store visited boxes
+    visited.add(0)  # Mark the first box as visited
 
-    while queue:
-        box = queue.pop(0)
-        visited.add(box)
+    keys = boxes[0]  # Keys obtained from the first box
 
-        # Check keys in the current box
-        for key in boxes[box]:
-            if key < n and key not in visited:
-                visited.add(key)
-                queue.append(key)
+    while keys:
+        key = keys.pop(0)  # Take a key from the list
+
+        if key < n and key not in visited:
+            visited.add(key)
+            keys.extend(boxes[key])  # Add keys from the new box
 
     return len(visited) == n
