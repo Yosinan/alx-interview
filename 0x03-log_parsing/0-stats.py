@@ -1,8 +1,10 @@
+#!/usr/bin/python3
+
 import sys
 
 # initialize variables to store metrics
 total_size = 0
-status_counts = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+stat_count = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 
 try:
     line_count = 0
@@ -20,7 +22,7 @@ try:
 
         # Update metrics
         total_size += file_size
-        status_counts[status_code] = status_counts.get(status_code, 0) + 1
+        stat_count[status_code] = stat_count.get(status_code, 0) + 1
 
         line_count += 1
 
@@ -29,15 +31,15 @@ try:
             print(f"Total file size: {total_size}")
 
             # Print status code counts in ascending order
-            for code in sorted(status_counts.keys()):
-                print(f"{code}: {status_counts[code]}")
+            for code in sorted(stat_count.keys()):
+                print(f"{code}: {stat_count[code]}")
 
     # Print final statistics when the loop ends
     print(f"Total file size: {total_size}")
 
     # Print status code counts in ascending order
-    for code in sorted(status_counts.keys()):
-        print(f"{code}: {status_counts[code]}")
+    for code in sorted(stat_count.keys()):
+        print(f"{code}: {stat_count[code]}")
 
 except KeyboardInterrupt:
     # Handle keyboard interruption (CTRL + C)
@@ -46,5 +48,5 @@ except KeyboardInterrupt:
     print(f"Total file size: {total_size}")
 
     # Print status code counts in ascending order
-    for code in sorted(status_counts.keys()):
-        print(f"{code}: {status_counts[code]}")
+    for code in sorted(stat_count.keys()):
+        print(f"{code}: {stat_count[code]}")
