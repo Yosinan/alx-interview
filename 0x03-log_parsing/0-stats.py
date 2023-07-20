@@ -1,67 +1,55 @@
 #!/usr/bin/python3
 
 '''
-This script reads input from stdin line by line and computes metrics based on the provided format:
-<Input format>: <IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
-- Total file size: <total size> (sum of all previous <file size>)
-- Number of lines by status code: <status code>: <number>
-
-Possible status codes: 200, 301, 400, 401, 403, 404, 405, and 500.
-If a status code doesn’t appear or is not an integer, it will not be included in the statistics.
-
-Usage:
-python script_name.py < input_file.txt
+    
 '''
+import sys
 
-def compute_metrics():
-    # Initialize variables to store metrics
-    total_size = 0
-    stat_count = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+# initialize variables to store metrics
+total_size = 0
+stat_count = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 
-    try:
-        line_count = 0
-        for line in sys.stdin:
-            line = line.strip()
+try:
+    line_count = 0
+    for line in sys.stdin:
+        line = line.strip()
 
-            # Check if the line matches the expected format
-            parts = line.split()
-            if len(parts) != 10 or parts[2] != "GET" or not parts[7].isdigit():
-                continue
+        # Check if the line matches the expected format
+        parts = line.split()
+        if len(parts) != 10 or parts[2] != "GET" or not parts[7].isdigit():
+            continue
 
-            # Extract file size and status code
-            file_size = int(parts[7])
-            status_code = int(parts[8])
+        # Extract file size and status code
+        file_size = int(parts[7])
+        status_code = int(parts[8])
 
-            # Update metrics
-            total_size += file_size
-            stat_count[status_code] = stat_count.get(status_code, 0) + 1
+        # Update metrics
+        total_size += file_size
+        stat_count[status_code] = stat_count.get(status_code, 0) + 1
 
-            line_count += 1
+        line_count += 1
 
-            # Print statistics after every 10 lines
-            if line_count % 10 == 0:
-                print(f"Total file size: {total_size}")
+        # Print statistics after every 10 lines
+        if line_count % 10 == 0:
+            print(f"Total file size: {total_size}")
 
-                # Print status code counts in ascending order
-                for code in sorted(stat_count.keys()):
-                    print(f"{code}: {stat_count[code]}")
+            # Print status code counts in ascending order
+            for code in sorted(stat_count.keys()):
+                print(f"{code}: {stat_count[code]}")
 
-        # Print final statistics when the loop ends
-        print(f"Total file size: {total_size}")
+    # Print final statistics when the loop ends
+    print(f"Total file size: {total_size}")
 
-        # Print status code counts in ascending order
-        for code in sorted(stat_count.keys()):
-            print(f"{code}: {stat_count[code]}")
+    # Print status code counts in ascending order
+    for code in sorted(stat_count.keys()):
+        print(f"{code}: {stat_count[code]}")
 
-    except KeyboardInterrupt:
-        # Handle keyboard interruption (CTRL + C)
-        # print("\nKeyboard interruption received. Printing current statistics:")
-        print(f"Total file size: {total_size}")
+except KeyboardInterrupt:
+    # Handle keyboard interruption (CTRL + C)
+    print("\nKeyboard interruption received. Printing current statistics:")
 
-        # Print status code counts in ascending order
-        for code in sorted(stat_count.keys()):
-            print(f"{code}: {stat_count[code]}")
+    print(f"Total file size: {total_size}")
 
-if __name__ == "__main__":
-    import sys
-    compute_metrics()
+    # Print status code counts in ascending order
+    for code in sorted(stat_count.keys()):
+        print(f"{code}: {stat_count[code]}")
