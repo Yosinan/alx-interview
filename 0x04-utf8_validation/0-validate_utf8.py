@@ -18,13 +18,18 @@ def validUTF8(data):
     for num in data:
         byte = num & 0xff
         if no_bytes == 0:
-            while byte & (1 << (7 - no_bytes)):
+            bit_mask = 1 << 7
+            while (1 << 7) & byte:
                 no_bytes += 1
+                bit_mask >>= 1
+            if no_bytes == 0:
+                continue
             if no_bytes == 1 or no_bytes > 4:
                 return False
         else:
-            if not (byte & (1 << 7) and not (byte & (1 << 6))):
+            bit_mask_1 = 1 << 7
+            bit_mask_2 = 1 << 6
+            if not (byte & bit_mask_1 and not (byte & bit_mask_2)):
                 return False
         no_bytes -= 1
-
     return no_bytes == 0
