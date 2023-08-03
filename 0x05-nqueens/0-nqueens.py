@@ -1,5 +1,8 @@
+#!/usr/bin/python3
+"""N queens problem"""
 import sys
 
+'''is_safe: checks if a queen can be placed in a position'''
 def is_safe(board, row, col, N):
     # Check if there is a queen in the same column
     for i in range(row):
