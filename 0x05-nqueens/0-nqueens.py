@@ -1,57 +1,60 @@
 #!/usr/bin/python3
-"""N queens problem"""
-
-import argparse
-
-'''is_safe: checks if a queen can be placed in a position'''
+""" program that solves the N queens problem.
+    """
+import sys
 
 
-def is_safe(board, row, col, N):
-    # Check if there is a queen in the same column
-    for i in range(row):
-        if board[i] == col:
-            return False
-        # Check diagonals
-        if abs(i - row) == abs(board[i] - col):
-            return False
-    return True
+def print_board(board, n):
+    """Print allocated positions to the queen"""
+    b = []
+
+    for i in range(n):
+        for j in range(n):
+            if j == board[i]:
+                b.append([i, j])
+    print(b)
 
 
-def solve_nqueens(N):
-    """Solves the N queens problem"""
-    if N < 4:
-        print("N must be at least 4")
-        exit(1)
-    solutions = []
-    board = [-1] * N
-
-    def solve(row):
-
-        if row == N:
-            solutions.append([(i, board[i]) for i in range(N)])
-            return
-
-        for col in range(N):
-            if is_safe(board, row, col, N):
-                board[row] = col
-                solve(row + 1)
-                board[row] = -1
-    solve(0)
-    return solutions
+def is_position_safe(board, i, j, r):
+    """Checks if the position is safe for the queen"""
+    return board[i] in (j, j - i + r, i - r + j)
 
 
-def main():
-    parser = argparse.ArgumentParser(description="N queens problem solver")
-    parser.add_argument(
-        "N", type=int, help="Number of queens (must be at least 4)")
-    args = parser.parse_args()
+def safe_positions(board, row, n):
+    """Find all safe positions where the queen can be allocated"""
+    if row == n:
+        print_board(board, n)
 
-    N = args.N
-    solutions = solve_nqueens(N)
+    else:
+        for j in range(n):
+            allowed = True
+            for i in range(row):
+                if is_position_safe(board, i, j, row):
+                    allowed = False
+            if allowed:
+                board[row] = j
+                safe_positions(board, row + 1, n)
 
-    for solution in solutions:
-        print(solution)
+
+def create_board(size):
+    """Generates the board"""
+    return [0 * size for i in range(size)]
 
 
-if __name__ == "__main__":
-    main()
+if len(sys.argv) != 2:
+    print("Usage: nqueens N")
+    exit(1)
+
+try:
+    n = int(sys.argv[1])
+except BaseException:
+    print("N must be a number")
+    exit(1)
+
+if (n < 4):
+    print("N must be at least 4")
+    exit(1)
+
+board = create_board(int(n))
+row = 0
+safe_positions(board, row, int(n))
