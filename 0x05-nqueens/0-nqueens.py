@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """N queens problem"""
-import sys
+
+import argparse
+
 '''is_safe: checks if a queen can be placed in a position'''
 
 
@@ -19,7 +21,7 @@ def solve_nqueens(N):
     """Solves the N queens problem"""
     if N < 4:
         print("N must be at least 4")
-        sys.exit(1)
+        exit(1)
     solutions = []
     board = [-1] * N
 
@@ -39,16 +41,12 @@ def solve_nqueens(N):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="N queens problem solver")
+    parser.add_argument(
+        "N", type=int, help="Number of queens (must be at least 4)")
+    args = parser.parse_args()
 
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        sys.exit(1)
-    try:
-        N = int(sys.argv[1])
-    except ValueError:
-        print("N must be a number")
-        sys.exit(1)
-
+    N = args.N
     solutions = solve_nqueens(N)
 
     for solution in solutions:
