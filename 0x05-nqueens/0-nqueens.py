@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """N queens problem"""
-import sys
 
 '''is_safe: checks if a queen can be placed in a position'''
 
