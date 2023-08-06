@@ -3,6 +3,8 @@
 import sys
 
 '''is_safe: checks if a queen can be placed in a position'''
+
+
 def is_safe(board, row, col, N):
     # Check if there is a queen in the same column
     for i in range(row):
@@ -21,14 +23,13 @@ def solve_nqueens(N):
         sys.exit(1)
     solutions = []
     board = [-1] * N
-    
-    def solve(row):
 
+    def solve(row):
 
         if row == N:
             solutions.append([(i, board[i]) for i in range(N)])
             return
-        
+
         for col in range(N):
             if is_safe(board, row, col, N):
                 board[row] = col
@@ -37,8 +38,8 @@ def solve_nqueens(N):
     solve(0)
     return solutions
 
-def main():
 
+def main():
 
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
@@ -48,11 +49,12 @@ def main():
     except ValueError:
         print("N must be a number")
         sys.exit(1)
-    
+
     solutions = solve_nqueens(N)
 
     for solution in solutions:
         print(solution)
+
 
 if __name__ == "__main__":
     main()
