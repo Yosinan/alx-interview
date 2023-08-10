@@ -1,4 +1,4 @@
-// #!/usr/bin/node
+#!/usr/bin/node
 
 // // require - Imports a module
 // const request = require('request');
@@ -48,7 +48,7 @@
 // const movieId = args[0];
 // getMovieCharacters(movieId);
 
-#!/usr/bin/env node
+
 
 import fetch from 'node-fetch';
 
