@@ -50,4 +50,3 @@ if __name__ == '__main__':
         raise
     else:
         display_metrics(total_size, status_code)
-
