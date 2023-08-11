@@ -1,8 +1,8 @@
 #!/usr/bin/node
 
 // require - Imports a module
-const request = require('request');
-
+// const request = require('request');
+import request from 'request';
 // getMovieCharacters - Prints all characters of a Star Wars movie
 function getMovieCharacters (movieId) {
   const filmUrl = `https://swapi-api.hbtn.io/api/films/${movieId}/`;
@@ -10,7 +10,6 @@ function getMovieCharacters (movieId) {
   request(filmUrl, (error, response, filmData) => {
     if (!error && response.statusCode === 200) {
       const film = JSON.parse(filmData);
-      console.log(`Characters in ${film.title}:`);
 
       const characterUrls = film.characters;
 
