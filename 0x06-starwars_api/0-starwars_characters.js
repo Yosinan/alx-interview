@@ -1,8 +1,8 @@
 #!/usr/bin/node
 
 // require - Imports a module
-// const request = require('request');
-import request from 'request';
+const request = require('request');
+// import request from 'request';
 // getMovieCharacters - Prints all characters of a Star Wars movie
 function getMovieCharacters (movieId) {
   const filmUrl = `https://swapi-api.hbtn.io/api/films/${movieId}/`;
