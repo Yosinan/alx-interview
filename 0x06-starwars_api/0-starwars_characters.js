@@ -1,10 +1,7 @@
 #!/usr/bin/node
 
 // require - Imports a module
-<<<<<<< HEAD
 // const request = require('request');
-=======
->>>>>>> 9b3272f4a2d945bfacdd9364f84cfff1029af33f
 import request from 'request';
 // getMovieCharacters - Prints all characters of a Star Wars movie
 function getMovieCharacters (movieId) {
