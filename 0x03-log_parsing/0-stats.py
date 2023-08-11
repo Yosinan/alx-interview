@@ -56,3 +56,4 @@ except KeyboardInterrupt:
     # Print status code counts in ascending order
     for code in sorted(stat_count.keys()):
         print(f"{code}: {stat_count[code]}")
+
