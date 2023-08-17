@@ -1,58 +1,52 @@
 #!/usr/bin/python3
-
-'''
-    script that reads stdin line by line and computes metrics:
-
-    Input format: <IP Address> - [<date>] "GET /projects/260 HTTP/1.1"
-    <status code> <file size>
-'''
+"""
+This module contains a method that reads stdin line by line and
+computes metrics
+"""
+import dis
 import sys
 
-# initialize variables to store metrics
-total_size = 0
-stat_count = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 
-try:
-    line_count = 0
-    for line in sys.stdin:
-        line = line.strip()
+def display_metrics(total_size, status_code):
+    """
+    Function that print the metrics
+    """
 
-        # Check if the line matches the expected format
-        parts = line.split()
-        if len(parts) != 10 or parts[2] != "GET" or not parts[7].isdigit():
-            continue
+    print('File size: {}'.format(total_size))
+    for key, value in sorted(status_code.items()):
+        if value != 0:
+            print('{}: {}'.format(key, value))
 
-        # Extract file size and status code
-        file_size = int(parts[7])
-        status_code = int(parts[8])
 
-        # Update metrics
-        total_size += file_size
-        stat_count[status_code] = stat_count.get(status_code, 0) + 1
+if __name__ == '__main__':
+    total_size = 0
+    status_code = {
+        '200': 0,
+        '301': 0,
+        '400': 0,
+        '401': 0,
+        '403': 0,
+        '404': 0,
+        '405': 0,
+        '500': 0
+    }
 
-        line_count += 1
+    try:
+        i = 0
+        for line in sys.stdin:
+            args = line.split()
+            if len(args) > 6:
+                status = args[-2]
+                file_size = args[-1]
+                total_size += int(file_size)
+                if status in status_code:
+                    i += 1
+                    status_code[status] += 1
+                    if i % 10 == 0:
+                        display_metrics(total_size, status_code)
 
-        # Print statistics after every 10 lines
-        if line_count % 10 == 0:
-            print(f"Total file size: {total_size}")
-
-            # Print status code counts in ascending order
-            for code in sorted(stat_count.keys()):
-                print(f"{code}: {stat_count[code]}")
-
-    # Print final statistics when the loop ends
-    print(f"Total file size: {total_size}")
-
-    # Print status code counts in ascending order
-    for code in sorted(stat_count.keys()):
-        print(f"{code}: {stat_count[code]}")
-
-except KeyboardInterrupt:
-    # Handle keyboard interruption (CTRL + C)
-    print("\nKeyboard interruption received. Printing current statistics:")
-
-    print(f"Total file size: {total_size}")
-
-    # Print status code counts in ascending order
-    for code in sorted(stat_count.keys()):
-        print(f"{code}: {stat_count[code]}")
+    except KeyboardInterrupt:
+        display_metrics(total_size, status_code)
+        raise
+    else:
+        display_metrics(total_size, status_code)
