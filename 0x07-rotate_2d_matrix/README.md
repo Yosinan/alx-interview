@@ -27,7 +27,7 @@ if __name__ == "__main__":
     print(matrix)
 
 ```
-#### When running `./main_0.py` Should output 
+#### Running `./main_0.py` should output :-
 
 ```
 [[7, 4, 1],
