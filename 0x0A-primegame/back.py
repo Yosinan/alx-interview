@@ -4,6 +4,7 @@
 
 
 def isWinner(x, nums):
+    '''function that is used in the prime game '''
     if not nums or x < 1:
         return None
 
